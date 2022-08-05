@@ -32,5 +32,5 @@ build:
    - "git clone https://github.com/openai/CLIP.git && cd CLIP && pip install -e . && cd .."
    - "mkdir -p /root/.cache/ldm/text2img-large/; wget --quiet -O /root/.cache/ldm/text2img-large/model.ckpt https://models.nmb.ai/majesty/latent_diffusion_txt2img_f8_large.ckpt"
 
-image: "r8.im/nightmareai/latent-diffusion"
-predict: "predict.py:Predictor"
+image: "r8.im/nightmareai/latent-viz"
+predict: "predict-viz.py:Predictor"
