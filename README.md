@@ -1,8 +1,8 @@
 # Batch script
 
-batch.py - will process all the files under content/input and spit them out to content/processed/output
-LDSR.py - can be used as a module for integration with other tools
-download_mode.bat - will download the required model files and place them under experiments/pretrained_models
+- batch.py - will process all the files under content/input and spit them out to content/processed/output
+- LDSR.py - can be used as a module for integration with other tools
+- download_mode.bat - will download the required model files and place them under experiments/pretrained_models
 
 
 
