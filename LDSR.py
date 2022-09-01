@@ -25,6 +25,7 @@ import torch
 #from IPython.display import Image as ipyimg
 #import ipywidgets as widgets
 #import resampling from PIL
+import tempfile
 
 from PIL import Image
 from numpy import asarray
@@ -309,23 +310,23 @@ class LDSR():
 
     @torch.no_grad()
     
-    def superResolution(self,image):
+    def superResolution(self,image,ddimSteps=100,preDownScale='None',postDownScale='None'):
         diffMode = 'superresolution'
         model = self.load_model_from_config()
         #@title Import location
         #@markdown ***File height and width should be multiples of 64, or image will be padded.***
 
         #@markdown *To change upload settings without adding more, run and cancel upload*
-        import_method = 'Directory' #@param ['Google Drive', 'Upload']
-        output_subfolder_name = 'processed' #@param {type: 'string'}
+        #import_method = 'Directory' #@param ['Google Drive', 'Upload']
+        #output_subfolder_name = 'processed' #@param {type: 'string'}
 
         #@markdown Drive method options:
         #drive_directory = '/content/drive/MyDrive/upscaleTest' #@param {type: 'string'}
 
         #@markdown Upload method options:
         #remove_previous_uploads = False #@param {type: 'boolean'}
-        save_output_to_drive = False #@param {type: 'boolean'}
-        zip_if_not_drive = False #@param {type: 'boolean'}
+        #save_output_to_drive = False #@param {type: 'boolean'}
+        #zip_if_not_drive = False #@param {type: 'boolean'}
         '''
         os.makedirs(pathInput+'/content/input'.replace('\\',os.sep).replace('/',os.sep), exist_ok=True)
         output_directory = os.getcwd()+f'/content/output/{output_subfolder_name}'.replace('\\',os.sep).replace('/',os.sep)
@@ -339,8 +340,7 @@ class LDSR():
 
         #Run settings
 
-        diffusion_steps = "100" #@param [25, 50, 100, 250, 500, 1000]
-        diffusion_steps = int(diffusion_steps)
+        diffusion_steps = int(ddimSteps) #@param [25, 50, 100, 250, 500, 1000]
         eta = 1.0 #@param  {type: 'raw'}
         stride = 0 #not working atm
 
@@ -348,9 +348,9 @@ class LDSR():
         # Downsampling to 256px first will often improve the final image and runs faster.
         
         # You can improve sharpness without upscaling by upscaling and then downsampling to the original size (i.e. Super Resolution)
-        pre_downsample = 'None' #@param ['None', '1/2', '1/4']
+        pre_downsample = preDownScale #@param ['None', '1/2', '1/4']
 
-        post_downsample = 'None' #@param ['None', 'Original Size', '1/2', '1/4']
+        post_downsample = postDownScale #@param ['None', 'Original Size', '1/2', '1/4']
 
         # Nearest gives sharper results, but may look more pixellated. Lancoz is much higher quality, but result may be less crisp.
         downsample_method = 'Lanczos' #@param ['Nearest', 'Lanczos']
@@ -379,14 +379,16 @@ class LDSR():
             downsample_rate = 4
         else:
             downsample_rate = 1
-
+        # get system temp directory
+        #dir = tempfile.gettempdir()
         width_downsampled_pre = width_og//downsample_rate
         height_downsampled_pre = height_og//downsample_rate
         if downsample_rate != 1:
             print(f'Downsampling from [{width_og}, {height_og}] to [{width_downsampled_pre}, {height_downsampled_pre}]')
             im_og = im_og.resize((width_downsampled_pre, height_downsampled_pre), Image.LANCZOS)
-            im_og.save(dir + '/content/temp.png'.replace('\\',os.sep).replace('/',os.sep))
-            filepath = dir + '/content/temp.png'.replace('\\',os.sep).replace('/',os.sep)
+            #os.makedirs(dir, exist_ok=True)
+            #im_og.save(dir + '/ldsr/temp.png'.replace('\\',os.sep).replace('/',os.sep))
+            #filepath = dir + '/ldsr/temp.png'.replace('\\',os.sep).replace('/',os.sep)
 
         logs = self.run(model["model"], im_og, diffMode, diffusion_steps, eta)
 
@@ -396,7 +398,7 @@ class LDSR():
         sample = (sample + 1.) / 2. * 255
         sample = sample.numpy().astype(np.uint8)
         sample = np.transpose(sample, (0, 2, 3, 1))
-        print(sample.shape)
+        #print(sample.shape)
         a = Image.fromarray(sample[0])
 
         #Downsample Post
