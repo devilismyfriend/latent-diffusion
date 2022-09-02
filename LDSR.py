@@ -385,7 +385,7 @@ class LDSR():
         height_downsampled_pre = height_og//downsample_rate
         if downsample_rate != 1:
             print(f'Downsampling from [{width_og}, {height_og}] to [{width_downsampled_pre}, {height_downsampled_pre}]')
-            im_og = im_og.resize((width_downsampled_pre, height_downsampled_pre), Image.Resampling.LANCZOS)
+            im_og = im_og.resize((width_downsampled_pre, height_downsampled_pre), Image.LANCZOS)
             #os.makedirs(dir, exist_ok=True)
             #im_og.save(dir + '/ldsr/temp.png'.replace('\\',os.sep).replace('/',os.sep))
             #filepath = dir + '/ldsr/temp.png'.replace('\\',os.sep).replace('/',os.sep)
@@ -414,9 +414,9 @@ class LDSR():
         height_downsampled_post = height//downsample_rate
 
         if downsample_method == 'Lanczos':
-            aliasing = Image.Resampling.LANCZOS
+            aliasing = Image.LANCZOS
         else:
-            aliasing = Image.Resampling.NEAREST
+            aliasing = Image.NEAREST
 
         if downsample_rate != 1:
             print(f'Downsampling from [{width}, {height}] to [{width_downsampled_post}, {height_downsampled_post}]')
