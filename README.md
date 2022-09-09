@@ -1,14 +1,14 @@
 # Fork for use with [sd-webui](https://github.com/sd-webui/stable-diffusion-webui/)
 - If you're following the steps outline via [Installation Link](https://github.com/sd-webui/stable-diffusion-webui/wiki/Installation), there is an optional steps to load Latent Diffusion Super Resolution (LDSR)
-- This repo helps minor updates to automatic download_mode.bat and keep things tested 
+- This repo helps minor updates to automatic download_mode.bat and keep things compatible with [sd-webui](https://github.com/sd-webui/stable-diffusion-webui/) 
 - download_mode.bat - will download the required model files and place them under experiments/pretrained_models
 
 ### LDSR
 1. Git clone this repo [Hafiidz/latent-diffusion](https://github.com/Hafiidz/latent-diffusion) into your `/stable-diffusion-webui/src/` folder
-2. You can do this by navigating to `/stable-diffusion-webui/src/` folder in your VSCode terminal, [git bash](https://user-images.githubusercontent.com/3688500/189250949-2d07dd66-1612-453f-ae23-5f7cd212f72d.png) or other relevant command prompt
+2. You can do this by navigating to `/stable-diffusion-webui/src/` folder in your VSCode terminal, or via running [git bash](https://user-images.githubusercontent.com/3688500/189250949-2d07dd66-1612-453f-ae23-5f7cd212f72d.png) or other relevant command prompt
 
 <div align="center">
-  <img src=https://user-images.githubusercontent.com/3688500/189251312-609f8f68-a5d3-48be-a0ea-e89db32022df.png  />
+  <img src=https://user-images.githubusercontent.com/3688500/189254107-2fbae6dc-e856-4814-89e3-256c2b890f30.png  />
 </div>
 
 3. Run `git clone https://github.com/Hafiidz/latent-diffusion.git`
