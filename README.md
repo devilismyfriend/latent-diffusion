@@ -1,6 +1,6 @@
 # Fork for use with [sd-webui](https://github.com/sd-webui/stable-diffusion-webui/)
 - If you're following the steps outline via [Installation Link](https://github.com/sd-webui/stable-diffusion-webui/wiki/Installation), there is an optional steps to load Latent Diffusion Super Resolution (LDSR)
-- This repo helps to keep while in the right state and minor updates to automatic download_mode.bat
+- This repo helps minor updates to automatic download_mode.bat and keep things tested 
 - download_mode.bat - will download the required model files and place them under experiments/pretrained_models
 
 ### LDSR
