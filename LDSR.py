@@ -184,8 +184,27 @@ class LDSR:
         return logs
 
     @torch.no_grad()
+    def super_resolution(self, image, steps=100, pre_down_scale='None', post_down_scale='None'):
+        pre_scale = 1
+        if pre_down_scale == '1/4':
+            pre_scale = 4
+        if pre_down_scale == '1/3':
+            pre_scale = 3
+        if pre_down_scale == '1/2':
+            pre_scale = 2
+
+        post_scale = 1
+        if post_down_scale == '1/4':
+            post_scale = 4
+        if post_down_scale == '1/3':
+            post_scale = 3
+        if post_down_scale == '1/2':
+            post_scale = 2
+
+        return self.superResolution(image, steps, pre_scale, post_scale)
+
     @torch.no_grad()
-    def superResolution(self, image, steps=100, pre_down_scale='None', post_down_scale='None'):
+    def superResolution(self, image, steps=100, pre_down_scale=1, post_down_scale=1):
         diffMode = 'superresolution'
         model = self.load_model_from_config()
 
@@ -215,6 +234,8 @@ class LDSR:
         # Down sample Pre
         if pre_down_sample == '1/2':
             downsample_rate = 2
+        elif pre_down_sample == '1/3':
+            downsample_rate = 3
         elif pre_down_sample == '1/4':
             downsample_rate = 4
         else:
@@ -239,6 +260,8 @@ class LDSR:
         # Down sample Post
         if post_down_sample == '1/2':
             downsample_rate = 2
+        elif post_down_sample == '1/3':
+            downsample_rate = 3
         elif post_down_sample == '1/4':
             downsample_rate = 4
         else:
